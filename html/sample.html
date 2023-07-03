@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="display-none receipt" id="collapse-receipt">
+        <figure>
+            <img src="images/main-logo.png" alt="">
+        </figure>
+        <p>Thank you for purchasing!</p>
+        
+        <div class="receipt-details">
+            <?php
+            echo "
+            <h3>Seeker's Details</h3>
+            <h5>".$purchase['seeker_fname']." ".$purchase['seeker_lname']." <em>purchase on ".date("M j, Y", strtotime($purchase['purchase_date']))."</em></h5>
+            <p></p>
+            <p>".$purchase['seeker_address']."</p>
+            <p>".$purchase['seeker_email']."</p>
+            ";
+            ?>
+        </div>
+        <div class="table">
+            <ul class='head'>
+                <li>Item</li>
+                <li>Qty</li>
+                <li>Cost</li>
+                <li>Total Cost</li>
+            </ul>
+            <?php
+            ##
+            echo "
+            <ul>
+                <li>".$service[1]."</li>
+                <li>".$purchase['purchase_qty']."</li>
+                <li>₱ ".number_format($purchase['service_cost'],2,'.',',')."</li>
+                <li>₱ ".number_format($purchase['service_cost'],2,'.',',')."</li>
+            </ul>
+            ";
+            ?>
+            <div class="hr full-width"></div>
+            <ul>
+                <li></li>
+                <li></li>
+                <li>Service Fee:</li>
+                <li>₱ <?php echo number_format($fee,2,'.',','); ?></li>
+            </ul>
+            <ul>
+                <li></li>
+                <li></li>
+                <li><h3>Total:</h3></li>
+                <li><h3>₱ <?php echo number_format($total,2,'.',',');?></h3></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
