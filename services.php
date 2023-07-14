@@ -34,8 +34,8 @@
 							$user = provider();
 						}
 						?>
-						<h2>Services <mark class="btn status type"><?php echo $user['provider_type']; ?></mark></h2>
-						<a class="btn btn-link-absolute" href="services_add.php">+ Add Services</a>
+						<h2>Packages <mark class="btn status type"></mark></h2>
+						<a class="btn btn-link-absolute" href="services_add.php">+ Add Packages</a>
 						<!-- <form action="" class="search-form">
 							<input type="text" placeholder="search here..">
 							<button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>

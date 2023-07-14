@@ -35,7 +35,7 @@
     <?php
       if(user_type() == "seeker"){
     ?>
-      <a class="sidebar-link <?php echo ($this_page == 'services')?'active':''; ?>" href="get_started.php" title="Services">
+      <a class="sidebar-link <?php echo ($this_page == 'services')?'active':''; ?>" href="packages.php" title="Services">
         <i class="fa-solid fa-clipboard-check"></i>
         <div>Get Started</div>
       </a>
@@ -52,13 +52,6 @@
         <div>Services</div>
       </a>
     <?php
-      } elseif(user_type() == "admin") {
-    ?>
-      <a class="sidebar-link <?php echo ($this_page == 'services')?'active':''; ?>" href="funeral.php" title="Services">
-        <i class="fa-solid fa-clipboard-check"></i>
-        <div>Services</div>
-      </a>
-    <?php
       }
     ?>
   </li>
@@ -70,7 +63,7 @@
   </li> -->
   <li class="sidebar-list">
     <?php
-    if(user_type() == 'admin'){
+    if(user_type() == 'provider'){
       $link = "<a class='sidebar-link ";
       $link .= ($this_page == 'transact')?'active':'';
       $link .= "' href='purchase.php' title='Transactions'>";
@@ -96,7 +89,7 @@
     if(user_type() != "admin"){
   ?>
   <li class="sidebar-list">
-    <a class="sidebar-link <?php echo ($this_page == 'contact')?'active':''; ?>" href="contact.php" title="Contact Us">
+    <a class="sidebar-link <?php echo ($this_page == 'contact')?'active':''; ?>" href="contact-us.php" title="Contact Us">
       <i class="fas fa-phone-square"></i>
       <div>Contact Us</div>
     </a>
@@ -113,7 +106,7 @@
   <li class="sidebar-list">
     <a class="sidebar-link">
       <i class="fa-solid fa-copyright"></i>
-      <div>All right reserved. <span>Wakecords <?php echo date("Y"); ?></span></div>
+      <div>All right reserved. <span>ABF funerals <?php echo date("Y"); ?></span></div>
     </a>
   </li>
 </ul>

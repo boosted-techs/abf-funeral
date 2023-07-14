@@ -5,7 +5,7 @@
 	
 	## CART SUCCESSFULLY ADDED
 	if(isset($_GET['cart_success'])){
-		echo "<script>alert('Successfully added to cart!')</script>";
+		echo "<script>alert('Successfully added to Bookings!')</script>";
 	}
 
 	## CART SUCCESSFULLY DELETE
@@ -31,7 +31,7 @@
 			<section class="banner-con">
 				<div class="wrapper">
 					<div class="banner-div">
-						<h2>Transactions</h2>
+						<h2>Bookings</h2>
 
 						<!-- TABS -->
 						<?php

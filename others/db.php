@@ -4,9 +4,9 @@
 		static $db = null;
 
 		static $hostname = "localhost";
-		static $dbname = "wakecords";
+		static $dbname = "abffunerals";
 		static $username  = "root";
-		static $password = "root";
+		static $password = "";
 
 		public static function query($sql, $params=array(), $transactType)
 		{

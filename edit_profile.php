@@ -105,19 +105,19 @@
 
 								<div>
 									<label>House No. / Street</label>
-									<input type="text" name="txtstreet" value="<?php echo ($empty_address) ? "":$address[0]; ?>" required>
+									<input type="text" name="txtstreet" value="<?php echo $address[0]  ?? ""; ?>" required>
 								</div>
 								<div>
 									<label>Sitio / Barangay</label>
-									<input type="text" name="txtbrgy" value="<?php echo ($empty_address) ? "":$address[1]; ?>" required>
+									<input type="text" name="txtbrgy" value="<?php echo $address[1] ?? ""; ?>" required>
 								</div>
 								<div>
 									<label>Province</label>
-									<input type="text" name="txtprovince" value="<?php echo ($empty_address) ? "":$address[3]; ?>" required>
+									<input type="text" name="txtprovince" value="<?php echo $address[3] ?? "";?>" required>
 								</div>
 								<div>
 									<label>City</label>
-									<input type="text" name="txtcity" value="<?php echo ($empty_address) ? "":$address[2]; ?>" required>
+									<input type="text" name="txtcity" value="<?php echo $address[2] ?? ""; ?>" required>
 								</div>
 							<?php
 							}

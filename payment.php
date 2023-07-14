@@ -221,7 +221,7 @@
 									// </div>
 									// ";
 									echo "
-									<h5>Church</h5>
+									<h5></h5>
 									<div class='details-con'>
 										<div style='width:100% !important;'>
 											<label>Death Date</label>
@@ -235,23 +235,23 @@
 
 							</div>
 							<!-- CARD DETAILS -->
-							<div class="banner-section details card">
+							<!-- <div class="banner-section details card">
 								<select name="cbomethod" onclick="payment_method(this);">
 									<option value="">BROWSE PAYMENT METHOD</option>
 									<option value="gcash" selected>Gcash</option>
-									<!-- <option value="card">Card</option> -->
-								</select>
+									<option value="card">Card</option> 
+								</select> -->
 								
-								<div id='card-payment' style='display:none;'>
+								<!-- <div id='card-payment' style='display:none;'>
 									<h3>Card Details 
 										<ul>
 											<li><i class="fa-brands fa-cc-mastercard"></i></li>
 											<li><i class="fa-brands fa-cc-amex"></i></li>
 											<li><i class="fa-brands fa-cc-visa"></i></li>
 										</ul>
-									</h3>
+									</h3> -->
 
-									<div class="details-con">
+									<!-- <div class="details-con">
 										<div>
 											<label>Account Name <span>*<span></label>
 											<input type="text" id="card-name" name="card-name">
@@ -269,9 +269,9 @@
 											<input type="text" id="card-cvv" name="txtcvv" minlength='3' maxlength='3'>
 										</div>
 									</div>
-								</div>
+								</div> -->
 
-								<div id='gcash-payment'>
+								<!-- <div id='gcash-payment'>
 									<h3>Gcash Details 
 										<ul>
 											<li><i class="fa-solid fa-g"></i></li>
@@ -288,7 +288,7 @@
 											<input type="text" id="gcash-num" name="gcash-num" minlength='11' maxlength='11' placeholder='Format: 09XX' required>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 
 							<button type='submit' name='btnpay' class='btn'>Pay now!</button>
@@ -298,7 +298,7 @@
 							if(isset($_POST['btnpay'])){
 								## USE FOR pay_purchase() FUNCTION
 								$proceed = false;
-								$_SESSION['field_array'] = [$_POST['cbomethod'], trim(ucwords($_POST['txtdeceasedname'])), trim(ucwords($_POST['gcash-name'])), $_POST['gcash-num'], $total];
+								$_SESSION['field_array'] = [trim(ucwords($_POST['txtdeceasedname'])), $total];
 
 								if(service_type_exist_bool("funeral", $type_list)){
 									if($_POST['dpreferred'] < date("Y-m-d")) {
@@ -334,11 +334,11 @@
 									
 								}
 								## PAYMENT FOR GCASH
-								if($_POST['cbomethod'] == "gcash" && $proceed) {
+								if($proceed) {
 									##
 									$_SESSION['type_list'] = $type_list;
 									$_SESSION['list'] = $list;
-									ewallet_source($_POST['cbomethod'], number_format($total,2,'',''));
+									ewallet_source("", number_format($total,2,'',''));
 								}
 								// header("Location: thanks.php");
 								// exit;
@@ -351,34 +351,6 @@
 			</section>
 		</div>
 	</div>
-	<script>
-		function payment_method(that){
-			const gcash = document.getElementById("gcash-payment");
-			const card = document.getElementById("card-payment");
-
-			if(that.value == "gcash") {
-				gcash.style.display = "block";
-				document.getElementById("gcash-name").required = true;
-				document.getElementById("gcash-num").required = true;
-
-				card.style.display = "none";
-				document.getElementById("card-name").required = false;
-				document.getElementById("card-num").required = false;
-				document.getElementById("card-expiry").required = false;
-				document.getElementById("card-cvv").required = false;
-			}
-			else if(that.value == "card") {
-				gcash.style.display = "none";
-				document.getElementById("gcash-name").required = false;
-				document.getElementById("gcash-num").required = false;
-
-				card.style.display = "block";
-				document.getElementById("card-name").required = true;
-				document.getElementById("card-num").required = true;
-				document.getElementById("card-expiry").required = true;
-				document.getElementById("card-cvv").required = true;
-			}
-		}
-	</script>
+	
 </body>
 </html>

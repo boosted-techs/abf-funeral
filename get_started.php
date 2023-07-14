@@ -31,7 +31,7 @@
 							We manage your funeral to the best.
 							<?php
 								## CHECK IF USER IS VERIFIED
-								echo "<a class='btn' href='./funeral.php'>Browse Services</a>";
+								echo "<a class='btn' href='./church.php'>Browse Services</a>";
 							?>
 						</div>
 					</div>

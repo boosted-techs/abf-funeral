@@ -77,7 +77,7 @@
 									<input type='hidden' name='massstart' id='massstart' value='{$services["purchase_wake_date"]}' required>
 								</div>
 								<div style='width:100%;font-style:italic;color:gray;'>
-									<label>No. of days between wake & burial mass start date: <span id='numdays1'>{$services["purchase_num_days"]}</span> days</label>
+									<label>Duration: <span id='numdays1'>{$services["purchase_num_days"]}</span> days</label>
 									<input type='hidden' name='numdays' id='numdays2' value='{$services["purchase_num_days"]}'>
 								</div>
 								<div>

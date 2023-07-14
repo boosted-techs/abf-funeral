@@ -99,7 +99,7 @@
 											## FOR CHURCH
 											case "church":
 												echo "
-												<label>Wake mass scheduled on: <em class='gray-italic' style='display:block;'>".date("M j, Y", strtotime($purchase['purchase_wake_date'])).", everyday for ".$purchase['purchase_num_days']." days @".$purchase['purchase_wake_time']."</em><label>
+												<label>Schedule: <em class='gray-italic' style='display:block;'>".date("M j, Y", strtotime($purchase['purchase_wake_date'])).", everyday for ".$purchase['purchase_num_days']." days @".$purchase['purchase_wake_time']."</em><label>
 												<div class='hr full-width'></div>
 												
 												<label>Deceased name</label>
@@ -154,9 +154,7 @@
 									<h3>Purchase Receipt <span class="shake-x delay-1" onclick="toggleCollapse('collapse-receipt', 'collapse-receipt-icon')"><i class="fa-solid fa-chevron-down front" id="collapse-receipt-icon"></i><i class="fa-solid fa-chevron-up"></i></span></h3>
 
 									<div class="display-none receipt" id="collapse-receipt">
-										<figure>
-											<img src="images/main-logo.png" alt="">
-										</figure>
+										<h4 class="text-center">ABF FUNERAL</h4>
 										<p>Thank you for purchasing!</p>
 										
 										<div class="receipt-details">
@@ -272,8 +270,8 @@
 										for($i=1; $i<=$purchase['purchase_num_days']; $i++){
 											echo "
 											<div class='".purchase_progress($purchase['purchase_progress'], $i)."'>
-												<h3>Wake Mass Date: ".date("M j, Y", strtotime($purchase['purchase_wake_date']."".($i - 1)." days"))."</h3>
-												<p>Wake Mass Time: ".$purchase['purchase_wake_time']."</p>"; 
+												<h3>Expected start Date: ".date("M j, Y", strtotime($purchase['purchase_wake_date']."".($i - 1)." days"))."</h3>
+												<p>Expected start Time: ".$purchase['purchase_wake_time']."</p>"; 
 												## UPDATE PROGRESS STATUS FOR PROVIDER
 												if(isset($_SESSION['provider']) && !progress_limits($_GET['purchaseid']) && purchase_progress($purchase['purchase_progress'], $i) != "done") {
 													echo "<a class='status abs-top-right' href='updating.php?id=".$_GET['purchaseid']."&purchase' onclick='return confirm(\"Are you sure you want to update purchase progress?\");'>Done</a>";
@@ -285,8 +283,8 @@
 										##
 										echo "
 										<div class='".purchase_progress($purchase['purchase_progress'], $purchase['purchase_num_days'] + 1)."'>
-											<h3>Burial Mass Date: ".date("M j, Y", strtotime($purchase['purchase_burial_date']))."</h3>
-											<p>Burial Mass Time: ".$purchase['purchase_burial_time']."</p>"; 
+											<h3>Expected end Date: ".date("M j, Y", strtotime($purchase['purchase_burial_date']))."</h3>
+											<p>Expected End Time: ".$purchase['purchase_burial_time']."</p>"; 
 											## UPDATE PROGRESS STATUS FOR PROVIDER
 											if(isset($_SESSION['provider']) && !progress_limits($_GET['purchaseid']) && purchase_progress($purchase['purchase_progress'], $purchase['purchase_num_days'] + 1) != "done") {
 												echo "<a class='status abs-top-right' href='updating.php?id=".$_GET['purchaseid']."&purchase' onclick='return confirm(\"Are you sure you want to update purchase progress?\");'>Done</a>";

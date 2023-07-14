@@ -159,7 +159,7 @@
 									}
 								echo "
 									</div>	
-										<button type='submit' name='btnadd' class='btn trad' onclick=\"return confirm('Confirm booking?');\">Book</button>
+										<button type='submit' name='btnadd' class='btn trad' onclick=\"return confirm('Confirm booking?');\">Book now</button>
 								</form>";
 								}
 								## FOR PROVIDER & ADMIN
@@ -248,11 +248,11 @@
 											}
 
 											if($massstart < date("Y-m-d") || $burialstart < date("Y-m-d")){
-												echo "<script>alert('Mass or burial date start must be future dates.')</script>";
+												echo "<script>alert('Start Date must be future dates.')</script>";
 												$proceed = false;
 											}
 											else if($massstart > $burialstart) {
-												echo "<script>alert('Mass date start cannot be greater than burial date start.')</script>";
+												echo "<script>alert('Start cannot be greater than End date start.')</script>";
 												$proceed = false;
 											}
 											else {
@@ -261,7 +261,7 @@
 													$data_list = [$_GET['service_id'], $_SESSION['seeker'], $massstart, $waketime, $numdays, $burialstart, $burialtime];
 												} 
 												else {
-													echo "<script>alert('You cannot book church mass service because you have an existing church mass service.')</script>";
+													echo "<script>alert('You cannot book a package you already booked.')</script>";
 												}
 											}
 											

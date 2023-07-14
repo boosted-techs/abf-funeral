@@ -234,55 +234,7 @@
 					}
 
 					## FOR PROVIDER ONLY
-					if(user_type() == "provider" && $status == "verified"){
-					?>
-					<div class="banner-div no-padding-top" id="subscription" style="padding-top:var(--size-6);">
-						
-						<?php
-						if(is_subscribed()){
-							$subs = read("subscription", ["provider_id"], [$_SESSION['provider']]);
-							
-							if(count($subs) > 0){
-								## IF SUBSCRIPTION IS EXPIRED 
-								$latest_sub = $subs[count($subs)-1];
-								if(date("Y-m-d") >= date("Y-m-d", strtotime($latest_sub['subs_duedate']))){
-									echo "<h2>Subscription <mark class='btn status type' style='background-color:var(--red);'>expired</mark></h2>";
-									not_subs($_SESSION['subs_desc']);
-								}
-								else 
-									echo "<h2>Subscription <mark class='btn status type'>".subscription()."</mark></h2>";
-								##
-								echo "
-								<div class='hr full-width' style='margin-top:10px;margin-bottom:20px;'></div>
-								<div class='banner-ratings profile-lists'>
-									<div class='list' >
-										<div>Start Date</div>
-										<div>Expiry Date</div>
-										<div>Paid</div>
-									</div>
-								";
-								##
-								foreach($subs as $result){
-									echo "
-									<div class='list data' style='margin-bottom:0;'>
-										<div>".date("M j, Y", strtotime($result['subs_startdate']))."</div>
-										<div>".date("M j, Y", strtotime($result['subs_duedate']))."</div>
-										<div>UGX ".number_format($result['subs_cost'],2,'.',',')."</div>
-									</div>
-									";
-								}
-								##
-								echo "</div>";
-							}
-						}
-						else {
-							echo "<h2>Subscription</h2>";
-							not_subs($_SESSION['subs_desc']);
-						}
-						?>
-					</div>
-					<?php
-					}
+					
 					?>
 				</div>
 			</section>

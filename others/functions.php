@@ -280,53 +280,53 @@
 	}
 	## GETTING EWALLET SOURCE
 	function ewallet_source($method, $amount){
-		$curl = curl_init();
+		//$curl = curl_init();
 
-		curl_setopt_array($curl, [
-		CURLOPT_URL => 'https://api.paymongo.com/v1/sources',
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => '',
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => 'POST',
-		CURLOPT_POSTFIELDS => "{
-			\"data\":
-			{
-				\"attributes\":
-				{
-					\"amount\":".$amount.",
-					\"redirect\":
-					{
-						\"success\":\"http://localhost/WakeCords/thanks.php?success\",
-						\"failed\":\"http://localhost/WakeCords/thanks.php?failed\"},
-						\"type\":\"".$method."\",
-						\"currency\":\"PHP\"
-					}
-				}
-			}",
-		CURLOPT_HTTPHEADER => [
-			"Accept: application/json",
-			"Authorization: Basic cGtfdGVzdF93RlNlWFZUZ2R5NXZ0NGVUdFJ3U1g3YVg6",
-			"Content-Type: application/json"
-		],
-		]);
+		// curl_setopt_array($curl, [
+		// CURLOPT_URL => 'https://api.paymongo.com/v1/sources',
+		// CURLOPT_RETURNTRANSFER => true,
+		// CURLOPT_ENCODING => '',
+		// CURLOPT_MAXREDIRS => 10,
+		// CURLOPT_TIMEOUT => 30,
+		// CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		// CURLOPT_CUSTOMREQUEST => 'POST',
+		// CURLOPT_POSTFIELDS => "{
+		// 	\"data\":
+		// 	{
+		// 		\"attributes\":
+		// 		{
+		// 			\"amount\":".$amount.",
+		// 			\"redirect\":
+		// 			{
+		// 				\"success\":\"http://localhost/WakeCords/thanks.php?success\",
+		// 				\"failed\":\"http://localhost/WakeCords/thanks.php?failed\"},
+		// 				\"type\":\"".$method."\",
+		// 				\"currency\":\"PHP\"
+		// 			}
+		// 		}
+		// 	}",
+		// CURLOPT_HTTPHEADER => [
+		// 	"Accept: application/json",
+		// 	"Authorization: Basic cGtfdGVzdF93RlNlWFZUZ2R5NXZ0NGVUdFJ3U1g3YVg6",
+		// 	"Content-Type: application/json"
+		// ],
+		// ]);
 
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
+		//$response = curl_exec($curl);
+		//$err = curl_error($curl);
 
-		curl_close($curl);
+		//curl_close($curl);
 
-		if ($err) {
-		echo "cURL Error #:" . $err;
-		} else {
-			$json_object = json_decode($response);
-			$redirect_url = $json_object->data->attributes->redirect->checkout_url;
-			$_SESSION['source_id'] = $json_object->data->id;
+		//if ($err) {
+		//echo "cURL Error #:" . $err;
+		//} else {
+			//$json_object = json_decode($response);
+			//$redirect_url = $json_object->data->attributes->redirect->checkout_url;
+			$_SESSION['source_id'] = md5(time());
 			##
-			header("Location: ".$redirect_url);
+			header("Location: thanks.php?success");
 			// echo $response;
-		}
+		//}
 	}
 	## SUBSCRIBED PROVIDER
 	function is_subscribed(){
@@ -405,22 +405,22 @@
 	function mass_required_details($wake_date="", $wake_time="", $num_days=0, $burial_date="", $burial_time=""){
 		return "
 		<div style='width:100%;color:gray;'>
-			<label>No. of days between wake & burial mass date: <span id='numdays1'>{$num_days}</span> days</label>
+			<label>Date duration <span id='numdays1'>{$num_days}</span> days</label>
 			<input type='hidden' name='numdays' id='numdays2' value='{$num_days}'>
 		</div>
 		<div>
-			<label>Wake Mass Start Date: </label>
+			<label>Start Date: </label>
 			<input type='date' name='massstart' id='massstart' value='{$wake_date}' required>
 		</div>
 		<div>
-			<label>Burial Mass Date: </label>
+			<label>End date Date: </label>
 			<input type='date' name='burialstart' id='burialstart' value='{$burial_date}' required>
 		</div>
 		<div class='gray-note'>
-			\"Note: You can also specify wake & burial mass time if not found.\"
+			\"Note: You can also specify the time if not found.\"
 		</div>
 		<div>
-			<label>Wake Mass Time: </label>
+			<label>Start Time: </label>
 			<input list='wake_time' name='waketime' value='{$wake_time}' placeholder='Ex. 06:00pm - 07:00pm' required>
 			<datalist id='wake_time'>
 				<option value='03:00pm - 04:00pm'>
@@ -431,7 +431,7 @@
 			</datalist>
 		</div>
 		<div>
-			<label>Burial Mass Time: </label>
+			<label>End Time: </label>
 			<input list='burial_time' name='burialtime' value='{$burial_time}' placeholder='Ex. 06:00pm - 07:00pm' required>
 			<datalist id='burial_time'>
 				<option value='03:00pm - 04:00pm'>
@@ -495,6 +495,9 @@
 					break;
 					## FOR CHURCH
 					case "church":
+						$from = explode(" ", $cart['cart_wake_time'])[0];
+						$to = explode ("-", $cart['cart_burial_time'])[1];
+						
 						echo "
 						<div class='my-cart'>
 							<figure>
@@ -505,11 +508,10 @@
 									<h3>".$cart['church_church']."</h3>
 									<p>".$cart['service_desc']."</p>
 
-									<p style='font-size:1rem;margin-top:1em;'>Wake mass start date: <span style='color:#aaa;'>".date("M j, Y", strtotime($cart['cart_wake_start_date']))."</span></p>
-									<p style='font-size:1rem;'>Wake mass no. of days: <span style='color:#aaa;'>{$cart['cart_num_days']}</span></p>
-									<p style='font-size:1rem;'>Wake mass time: <span style='color:#aaa;'>{$cart['cart_wake_time']}</span></p>
-									<p style='font-size:1rem;'>Burial mass date: <span style='color:#aaa;'>".date("M j, Y", strtotime($cart['cart_wake_start_date']."+ {$cart['cart_num_days']} days"))."</span></p>
-									<p style='font-size:1rem;'>Burial mass time: <span style='color:#aaa;'>{$cart['cart_burial_time']}</span></p>
+									<p style='font-size:1rem;margin-top:1em;'>Booked dates from <span style='color:#aaa;'>".date("M j, Y", strtotime($cart['cart_wake_start_date']))." to ".date("M j, Y", strtotime($cart['cart_wake_start_date']))."</span></p>
+									
+									<p style='font-size:1rem;'>Time from: <span style='color:#aaa;'>{$from} to {$to}</span></p>
+
 								</div>
 								<h3>UGX ".number_format($cart['service_cost'],2,'.',',')."</h3>
 							</div>
@@ -654,7 +656,7 @@
 			}
 		}
 		else {
-			echo messaging("error", "Your cart is empty! <a href='funeral.php'>Click here to add to cart!");
+			echo messaging("error", "Your have nothing booked! <a href='packages.php'>Click here to book a package!");
 		}
 	}
 	## NOT SUBSCRIBED OR EXPIRED
@@ -698,7 +700,8 @@
 	function pay_purchase($type_list, $purchase_list){
 		## DECLARE DATA
 		$cbomethod = $_SESSION['field_array'][0];
-		$txtdeceasedname = $_SESSION['field_array'][1];
+		$txtdeceasedname = $_SESSION['field_array'][0];
+		//print_r($_SESSION); die();
 		## SESSIONS ARE LOCATED IN payment.php
 		if(service_type_exist_bool("funeral", $type_list)){
 			$txtdecloc = $_SESSION['field_array_funeral'][0];
@@ -723,8 +726,10 @@
 		if($cbomethod == "gcash") {
 			$acc_name = $_SESSION['field_array'][2];
 			$acc_num = $_SESSION['field_array'][3];
-			$total = $_SESSION['field_array'][4];
+			$total = $_SESSION['field_array'][0];
 		}
+		$total = $_SESSION['field_array'][1];
+		//print_r($total); die();
 		## ERROR TRAP
 		if(preg_match('/\d/', $txtdeceasedname)){
 			echo "<script>alert('Deceased name cannot have a number!')</script>";
@@ -753,7 +758,7 @@
 				create("details", $attr_list, qmark_generator(count($attr_list)), $data_list);
 
 				## PURCHASE STATUS 'to pay' TO 'paid'
-				update("purchase", ["purchase_total", "purchase_status"], [$total, "paid", $results['purchase_id']], "purchase_id");
+				update("purchase", ["purchase_total", "purchase_status"], [$_SESSION['field_array'][1], "paid", $results['purchase_id']], "purchase_id");
 
 				## UPDATE SERVICE REMAINING QTY FOR NOT CHURCH
 				if(service_type_exist_bool("funeral", $type_list)){
@@ -782,7 +787,7 @@
 				
 				## CREATE PAYMENT TABLE
 				$attr_list = ["purchase_id", "payment_method", "account_name", "account_number", "payment_datetime"];
-				$data_list = [$results['purchase_id'], $cbomethod, $acc_name, $acc_num, date("Y-m-d H:i:s")];
+				$data_list = [$results['purchase_id'], $cbomethod, "", "", date("Y-m-d H:i:s")];
 
 				create("payment", $attr_list, qmark_generator(count($attr_list)), $data_list);
 			}	
@@ -889,7 +894,7 @@
 						";
 					}
 				}
-				else messaging("error", "No posted services yet!");
+				else messaging("error", "No posted Packages yet!");
 			break;
 			## FOR CHURCH
 			case "church":
@@ -912,7 +917,7 @@
 								<p>
 									".limit_text($results['service_desc'], 10)."
 								</p>
-								<p>Priest: <b>{$results['church_priest']}</b></p>
+								<p><b>{$results['church_priest']}</b></p>
 							</a>
 							<div class='buttons'>	
 						"; 
@@ -933,7 +938,7 @@
 						";
 					}
 				}
-				else messaging("error", "No posted services yet!");
+				else messaging("error", "No posted packages yet!");
 			break;
 			## FOR HEADSTONE
 			case "headstone":
@@ -1051,7 +1056,7 @@
 				echo "
 				<div class='list'>
 					<div>
-						<h3>{$name} <mark class='btn status type'>".$service_['service_type']."</mark>
+						<h3>{$name} 
 							<span>
 								<!-- DATE -->
 								on: ".date("F j, Y", strtotime($list[$j]['purchase_date']))."
@@ -1201,7 +1206,7 @@
 					## FOR SEEKER
 					if(isset($_SESSION['seeker'])){
 						echo "
-						<mark class='status' id='open-reschedule' onclick='open_modal(\"reschedule\", {$list[$j]['purchase_id']});'>resched</mark>";
+						<mark class='status' id='open-reschedule' onclick='open_modal(\"reschedule\", {$list[$j]['purchase_id']});'>Reschedule</mark>";
 						## CAN CANCEL IF MORE THAN 3 DAYS REMAINING BEFORE SERVICE WAKE DATE
 						$days_remaining = (strtotime(date($list[$j]['purchase_wake_date'])) - strtotime(date("Y-m-d"))) /60/60/24;
 						##
@@ -1214,9 +1219,9 @@
 							<button id='close-reschedule{$list[$j]['purchase_id']}'>+</button>
 							<form method='post' style='text-align:left;'>
 								<input type='hidden' name='pid' value='{$list[$j]['purchase_id']}'></input>
-								<h2>Mass Information</h2>
+								<h2>Package details</h2>
 								".mass_required_details($list[$j]['purchase_wake_date'], $list[$j]['purchase_wake_time'], $list[$j]['purchase_num_days'], $list[$j]['purchase_burial_date'], $list[$j]['purchase_burial_time'])."
-								<button class='btn' type='submit' name='btnreschedule' onclick='return confirm(\"Confirm reschedule purchase?\");'>Resched</button>
+								<button class='btn' type='submit' name='btnreschedule' onclick='return confirm(\"Confirm reschedule purchase?\");'>Reschedule</button>
 							</form>
 						</dialog>";
 					}
@@ -1228,7 +1233,7 @@
 					<button id='close-approval{$list[$j]['purchase_id']}'>+</button>
 					<form method='post' style='text-align:left;'>
 						<input type='hidden' name='pid' value='{$list[$j]['purchase_id']}'></input>
-						<h2>Mass Information</h2>
+						<h2>Package details</h2>
 						"; 
 						if(isset($_SESSION['provider'])){
 							$seeker_info = read("seeker", ["seeker_id"], [$list[$j]['seeker_id']]);
@@ -1238,16 +1243,16 @@
 						}
 						echo "
 						
-						<h4>{$name} ({$differ_['church_cemetery']} Cemetery)</h4>
+						<h4>{$name}</h4>
 						<h3 style='margin-bottom:0;'>UGX ".number_format($list[$j]['purchase_total'],2,'.',',')."</h3>
 						<p>{$service_['service_desc']}</p>
 
 						<p style='font-size:1rem;margin-bottom:1em;'>
-							Wake mass start date: <span style='color:#aaa;'>".date("M j, Y", strtotime($list[$j]['purchase_wake_date']))."</span><br>
-							Wake mass no. of days: <span style='color:#aaa;'>{$list[$j]['purchase_num_days']}</span><br>
-							Wake mass time: <span style='color:#aaa;'>{$list[$j]['purchase_wake_time']}</span><br>
-							Burial mass date: <span style='color:#aaa;'>".date("M j, Y", strtotime($list[$j]['purchase_burial_date']))."</span><br>
-							Burial mass time: <span style='color:#aaa;'>{$list[$j]['purchase_burial_time']}</span>
+							Start date: <span style='color:#aaa;'>".date("M j, Y", strtotime($list[$j]['purchase_wake_date']))."</span><br>
+							
+							Expected start time: <span style='color:#aaa;'>{$list[$j]['purchase_wake_time']}</span><br>
+							End date: <span style='color:#aaa;'>".date("M j, Y", strtotime($list[$j]['purchase_burial_date']))."</span><br>
+							Expected end time: <span style='color:#aaa;'>{$list[$j]['purchase_burial_time']}</span>
 						</p>
 						"; 
 					## APPROVE & REJECT BUTTON FOR PROVIDER
@@ -1727,10 +1732,10 @@
 							<p>
 								".limit_text($results['service_desc'], 10)."
 							</p>
-							<p>Priest: <b>{$results['church_priest']}</b></p>
+							<p><b>{$results['church_priest']}</b></p>
 							<div class='buttons'>
 								<a title='View' href='funeral_tradition_this.php?service_id=".$results['service_id']."&id={$results['provider_id']}'><i class='fa-solid fa-eye'></i></a>
-								<a title='Donate' href='#'><i class='fa-solid fa-circle-dollar-to-slot'></i></a>
+								
 							</div>
 						</div>
 						";
@@ -1847,7 +1852,7 @@
 					if(isset($_POST['cbaddress']))
 						$checked = true;
 					else {
-						$txtaddress = trim(ucwords($_POST['txtstreet'])).", ".trim(ucwords($_POST['txtbrgy'])).", ".trim(ucwords($_POST['txtcity'])).", ".trim(ucwords($_POST['txtprovince']));
+						$txtaddress = "";
 					}
 					##
 					$attr_list = ["provider_id", "service_type", "service_desc", "service_cost", "service_img", "service_status"];

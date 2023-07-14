@@ -239,56 +239,25 @@
 
 									echo "
 									<div>
-										<label>Priest</label>
+										<label>Tagline</label>
 										<input type='text' name='txtpriest' value='"; 
 										echo ($edit) ? return_value("services", $_GET['id'], "priest"):"";
 										echo "' required>
 									</div>
 									<div>
-										<label>Church</label>
+										<label>Package name</label>
 										<input type='text' name='txtsname' value='"; 
 										echo ($edit) ? return_value("services", $_GET['id'], "name"):"";
 										echo "' required>
 									</div>
 									<div>
-										<label>Cemetery</label>
+										<label>Package alias</label>
 										<input type='text' name='txtcemetery' value='"; 
 										echo ($edit) ? return_value("services", $_GET['id'], "cemetery"):"";
 										echo "' required>
 									</div>
 
-									<h3 style='width:100%;'>Complete Address</h3>
-									<div style='width:100%;' class='checkbox'>
-										<div class='full'>
-											<input id='profile-address' type='checkbox' name='cbaddress'>
-											<label class='label-span'><span>Check to use address in Profile.</span></label>
-										</div>
-									</div>
-
-									<div>
-										<label>House No. / Street</label>
-										<input id='street' class='' type='text' name='txtstreet' value='"; 
-										echo ($edit) ? return_value("services", $_GET['id'], "address_street"):"";
-										echo "' required>
-									</div>
-									<div>
-										<label>Sitio / Barangay</label>
-										<input id='brgy' class='' type='text' name='txtbrgy' value='"; 
-										echo ($edit) ? return_value("services", $_GET['id'], "address_brgy"):"";
-										echo "' required>
-									</div>
-									<div>
-										<label>Province</label>
-										<input id='province' class='' type='text' name='txtprovince' value='"; 
-										echo ($edit) ? return_value("services", $_GET['id'], "address_province"):"";
-										echo "' required>
-									</div>
-									<div>
-										<label>City</label>
-										<input id='city' class='' type='text' name='txtcity' value='"; 
-										echo ($edit) ? return_value("services", $_GET['id'], "address_city"):"";
-										echo "' required>
-									</div>
+															
 									";
 								break;
 								## FOR HEADSTONE SERVICES
